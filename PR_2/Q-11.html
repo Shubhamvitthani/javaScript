@@ -1,0 +1,29 @@
+<!-- Write a JavaScript program to create basic calculator using ladder if else. -->
+
+<script type="text/javascript">
+
+    var a = parseInt(prompt("Enter 1stt number: "));
+    var b = parseInt(prompt("Enter 2nd number: "));
+    var operator = prompt("Enter operator (+, -, *, /): ");
+    if (operator == "+") {
+        document.write(`<h2> sum is :- ${a + b} </h2>`)
+    }
+    else if (operator == "-") {
+        document.write(`<h2> difference  :- ${a - b} </h2>`)
+    }
+    else if (operator == "*") {
+        document.write(`<h2> Product  :- ${a * b} </h2>`)
+    }
+    else if (operator == "/") {
+        if (b != 0) {
+            document.write(`<h2> Quotient :- ${a / b} </h2>`)
+        }
+        else {
+            document.write(`<h2> Division zero can't allowed </h2>`)
+        }
+    }
+    else {
+        document.write(`<h2> Wrong operator </h2>`)
+    }
+
+</script>
