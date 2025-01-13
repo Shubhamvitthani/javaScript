@@ -1,0 +1,20 @@
+<!-- Write javascript program print out Fibonacci series. (0,1,1,2,3,5,8…) -->
+<script type="text/javascript">
+
+    var n = parseInt(prompt(`enter any number: -`))
+    var x = 0;
+    var y = 1;
+
+    document.write(`<h2>${x} </h2>`)
+    document.write(`<h2>${y} </h2>`)
+
+    for (let i = 0; i < n; i++) {
+
+        var z = x + y;
+        document.write(`<h2>${z}</h2>`)
+        x = y;
+        y = z;
+    }
+
+
+</script>
