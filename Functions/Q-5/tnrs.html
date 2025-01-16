@@ -1,0 +1,20 @@
+<!-- Write Write a JavaScript program to add two number of addition, subtraction, multiplication, division (using simple function) -->
+
+<script type="text/javascript">
+    var a = parseInt(prompt(`enter any number:-`))
+    var b = parseInt(prompt(`enter any number:-`))
+
+    const addnum = () => {
+        let result = `
+         <h2> Addition is :- ${a} + ${b} =  ${a + b}</h2>
+         <h2> Subtraction is :- ${a} - ${b}  = ${a - b}</h2>  
+         <h2> Multiplication is :- ${a} * ${b} = ${a * b}</h2>
+         <h2> Division is :- ${a} / ${b} = ${a / b}</h2>
+    ` ;
+        return result;
+    }
+
+    document.write(`<h2>${addnum()}</h2>`);
+
+
+</script>

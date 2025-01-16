@@ -1,0 +1,20 @@
+<!-- Write a JavaScript program to check number positive and negetive? (using simple function) -->
+
+<script type="text/javascript">
+
+    var n = parseInt(prompt(` Enter a number `))
+
+    const check = (n) => {
+        if (n > 0) {
+            return `<h2> Positive number : ${n}</h2>`
+        }
+        else if (n < 0) {
+            return `<h2> Negative number : ${n}</h2>`
+        }
+        else {
+            return `<h2> Zero number : ${n}</h2>`
+        }
+    }
+    document.write(`<h2>${check(n)}</h2>`)
+
+</script>
