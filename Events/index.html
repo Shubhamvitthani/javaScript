@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box"></div>
+    <button id="btn" onclick="myFunction()">Click me</button>
+
+
+    <script>
+        function myFunction() {
+            let box = document.querySelector(`.box`)
+            box.style.height = "200px";
+            box.style.width = "200px";
+            box.style.background = "red";
+
+            let btn = document.querySelector(`#btn`);
+            btn.style.display = "none";
+        }
+
+    </script>
+</body>
+
+</html>

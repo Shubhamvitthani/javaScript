@@ -1,0 +1,79 @@
+<h2 align="center">View User</h2>
+<table border="1" ; align="center">
+
+    <thead>
+        <th style="padding: 10px; background-color: red; color: white;">ID</th>
+        <th style="padding: 10px; background-color: red; color: white;">NAME</th>
+        <th style="padding: 10px; background-color: red; color: white;">AGE</th>
+        <th style="padding: 10px; background-color: red; color: white;">EMAIL</th>
+        <th style="padding: 10px; background-color: red; color: white;">PHONE</th>
+        <th style="padding: 10px; background-color: red; color: white;">ADDRESS</th>
+        <th style="padding: 10px; background-color: red; color: white;">SALARY</th>
+        <th style="padding: 10px; background-color: red; color: white;">GENDER</th>
+        <th style="padding: 10px; background-color: red; color: white;">STATUS</th>
+    </thead>
+    <tbody id="record" align="center"></tbody>
+
+</table>
+
+<script type="text/javascript">
+
+    let details = [
+        {
+            id: '123',
+            name: 'virat',
+            age: '30',
+            email: 'virat@gmail.com',
+            phone: '1234567890',
+            address: 'surat',
+            salary: '10000',
+            gender: 'male',
+            status: 'active'
+        },
+
+        {
+            id: '124',
+            name: 'chirag',
+            age: '47',
+            email: 'chirag@gmail.com',
+            phone: '345678986',
+            address: 'delhi',
+            salary: '15000',
+            gender: 'male',
+            status: 'deactive'
+        },
+
+        {
+            id: '125',
+            name: 'kiran',
+            age: '40',
+            email: 'kiran@gmail.com',
+            phone: '2387456789',
+            address: 'mumbai',
+            salary: '12000',
+            gender: 'female',
+            status: 'active'
+        }
+    ]
+    let tbl = "";
+    let filterstatus = details.filter((val) => val.status == 'active' && val.gender == 'male')
+    filterstatus.map((val, index) => {
+        tbl += `
+                <tr>
+
+                     <td>${val.id}</td>
+                     <td>${val.name}</td>
+                     <td>${val.age}</td>
+                     <td>${val.email}</td>
+                     <td>${val.phone}</td>
+                     <td>${val.address}</td>
+                     <td>${val.salary}</td>
+                     <td>${val.gender}</td>
+                     <td>${val.status}</td>
+
+                 </tr>
+            `
+    })
+    document.getElementById("record").innerHTML = tbl;
+
+</script>

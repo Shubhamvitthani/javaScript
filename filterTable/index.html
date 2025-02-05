@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Records</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+
+        input,
+        button,
+        select {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.829);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: black;
+            color: white;
+        }
+
+        .error-msg {
+            color: red;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: rgba(128, 128, 128, 0.479);
+            transition: background-color 0.1s ease;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Filter Records</h1>
+        <input type="text" placeholder="Enter City" id="city">
+        <br>
+        <input type="number" placeholder="Min Salary" id="minSalary"> TO
+        <input type="number" placeholder="Max Salary" id="maxSalary">
+        <br>
+        <select id="designation">
+            <option value="">Select Designation</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Data Analyst">Data Analyst</option>
+            <option value="Web Developer">Web Developer</option>
+            <option value="Junior">Junior</option>
+            <option value="Senior">Senior</option>
+        </select>
+        <br>
+        <button onclick="filterRecords()">Search</button>
+        <button onclick="reset()">Reset</button>
+        <br><br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>City</th>
+                    <th>Salary</th>
+                    <th>Designation</th>
+                </tr>
+            </thead>
+            <tbody id="records"></tbody>
+        </table>
+        <h2 class="error-msg" id="error"></h2>
+    </div>
+
+    <script>
+        const records = [
+            {
+                id: 1, name: "Vicky", email: "vicky@gmail.com", gender: "male", city: "bangalore", salary: 50000, designation: "Software Engineer"
+            },
+            {
+                id: 2, name: "Ananya", email: "ananya@gmail.com", gender: "female", city: "mumbai", salary: 60000, designation: "Data Analyst"
+            },
+            {
+                id: 3, name: "Rahul", email: "rahul@gmail.com", gender: "male", city: "delhi", salary: 55000, designation: "Web Developer"
+
+            },
+            {
+                id: 4, name: "Ajay", email: "ajay@gmail.com", gender: "male", hobby: ["travelling", "reels"], city: "delhi", salary: 8000, designation: "Junior"
+            },
+            {
+                id: 5, name: "Rasik", email: "rasik@gmail.com", gender: "male", hobby: ["volleyball", "music"], city: "ahmedabad", salary: 9000, designation: "Data Analyst"
+            },
+            {
+                id: 6, name: "Vishal", email: "vishal@gmail.com", gender: "male", hobby: ["cricket", "photography"], city: "bangalore", salary: 6000, designation: "Junior"
+            },
+            {
+                id: 7, name: "Sandeep", email: "sandeep@gmail.com", gender: "male", hobby: ["music", "travelling"], city: "kolkata", salary: 5000, designation: "Data Analyst"
+            },
+            {
+                id: 8, name: "Sahil", email: "sahil@gmail.com", gender: "male", hobby: ["reading", "cooking"], city: "chennai", salary: 15500, designation: "Senior"
+            },
+            {
+                id: 9, name: "Amit", email: "amit@gmail.com", gender: "male", hobby: ["football", "gaming"], city: "delhi", salary: 6500, designation: "Junior"
+            },
+            {
+                id: 10, name: "Manish", email: "manish@gmail.com", gender: "male", hobby: ["cricket", "reading"], city: "lucknow", salary: 77000, designation: "Senior"
+            },
+            {
+                id: 11, name: "Kunal", email: "kunal@gmail.com", gender: "male", hobby: ["music", "gaming"], city: "hyderabad", salary: 25000, designation: "Senior"
+            },
+            {
+                id: 12, name: "Praveen", email: "praveen@gmail.com", gender: "male", hobby: ["sports", "reading"], city: "jaipur", salary: 20000, designation: "Junior"
+            },
+            {
+                id: 13, name: "Nikhil", email: "nikhil@gmail.com", gender: "male", hobby: ["volleyball", "movies"], city: "indore", salary: 21000, designation: "Junior"
+            },
+            {
+                id: 14, name: "Ravi", email: "ravi@gmail.com", gender: "male", hobby: ["travelling", "music"], city: "pune", salary: 35000, designation: "Software Engineer"
+            },
+            {
+                id: 15, name: "Arvind", email: "arvind@gmail.com", gender: "male", hobby: ["cricket", "painting"], city: "surat", salary: 12000, designation: "Junior"
+            },
+            {
+                id: 16, name: "Kartik", email: "kartik@gmail.com", gender: "male", hobby: ["music", "cricket"], city: "mumbai", salary: 15000, designation: "Software Engineer"
+            },
+            {
+                id: 17, name: "Deepak", email: "deepak@gmail.com", gender: "male", hobby: ["football", "photography"], city: "ahmedabad", salary: 10000, designation: "Senior"
+            },
+            {
+                id: 18, name: "Vikram", email: "vikram@gmail.com", gender: "male", hobby: ["reading", "movies"], city: "chennai", salary: 55000, designation: "Junior"
+            },
+            {
+                id: 19, name: "Suresh", email: "suresh@gmail.com", gender: "male", hobby: ["cricket", "travelling"], city: "mumbai", salary: 45000, designation: "Junior"
+            },
+            {
+                id: 20, name: "Tejas", email: "tejas@gmail.com", gender: "male", hobby: ["reading", "cooking"], city: "delhi", salary: 70000, designation: "Web Developer"
+            },
+            {
+                id: 21, name: "Rajat", email: "rajat@gmail.com", gender: "male", hobby: ["gaming", "volleyball"], city: "bangalore", salary: 100000, designation: "Senior"
+            },
+            {
+                id: 22, name: "Aakash", email: "aakash@gmail.com", gender: "male", hobby: ["cricket", "music"], city: "kolkata", salary: 50000, designation: "Junior"
+            },
+            {
+                id: 23, name: "Kiran", email: "kiran@gmail.com", gender: "female", hobby: ["travelling", "football"], city: "mumbai", salary: 25000, designation: "Senior"
+            },
+            {
+                id: 24, name: "Pawan", email: "pawan@gmail.com", gender: "male", hobby: ["reading", "photography"], city: "delhi", salary: 30000, designation: "Junior"
+            },
+            {
+                id: 25, name: "Kishore", email: "kishore@gmail.com", gender: "male", hobby: ["football", "cooking"], city: "pune", salary: 90000, designation: "Web Developer"
+            }
+        ];
+
+        const viewRecord = () => {
+            let tbl = "";
+            records.forEach((val) => {
+                tbl += `
+                    <tr>
+                        <td>${val.id}</td>
+                        <td>${val.name}</td>
+                        <td>${val.email}</td>
+                        <td>${val.gender}</td>
+                        <td>${val.city}</td>
+                        <td>${val.salary}</td>
+                        <td>${val.designation}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('records').innerHTML = tbl;
+        };
+
+        viewRecord();
+
+        const filterRecords = () => {
+            let city = document.getElementById('city').value.trim().toLowerCase();
+            let minSalary = document.getElementById('minSalary').value;
+            let maxSalary = document.getElementById('maxSalary').value;
+            let designation = document.getElementById('designation').value;
+
+            let filteredRecords = records.filter(val =>
+                (city === "" || val.city.toLowerCase() === city) &&
+                (minSalary === "" || val.salary >= parseInt(minSalary)) &&
+                (maxSalary === "" || val.salary <= parseInt(maxSalary)) &&
+                (designation === "" || val.designation === designation)
+            );
+
+            let tbl = "";
+
+            if (filteredRecords.length === 0) {
+                document.getElementById('error').innerText = "No records found";
+                document.getElementById('records').innerHTML = "";
+            } else {
+                document.getElementById('error').innerText = "";
+                filteredRecords.forEach((val) => {
+                    tbl += `
+                        <tr>
+                            <td>${val.id}</td>
+                            <td>${val.name}</td>
+                            <td>${val.email}</td>
+                            <td>${val.gender}</td>
+                            <td>${val.city}</td>
+                            <td>${val.salary}</td>
+                            <td>${val.designation}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('records').innerHTML = tbl;
+            }
+        };
+
+        const reset = () => {
+            viewRecord();
+            document.getElementById('error').innerText = "";
+            document.getElementById('city').value = "";
+            document.getElementById('minSalary').value = "";
+            document.getElementById('maxSalary').value = "";
+            document.getElementById('designation').value = "";
+        };
+    </script>
+</body>
+
+</html>

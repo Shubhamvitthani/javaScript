@@ -1,0 +1,14 @@
+<!-- find duplicate element in array -->
+
+<script type="text/javascript">
+
+    let array = [10, 38, 38, 48, 10, 32, 90, 48];
+
+    let duplicates = array.filter((val, index) =>
+        array.indexOf(val) !== index
+    )
+
+    console.log(duplicates);
+
+
+</script>

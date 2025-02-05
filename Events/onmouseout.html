@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div onmouseout="data()" style="height: 200px;width :200px;background-color:red ;"></div>
+    
+    <h1 id="out"></h1>
+
+    <script type="text/javascript">
+        let count = 0;
+        function data() {
+            count++;
+            document.getElementById('out').innerHTML = count;
+        }
+        data();
+    </script>
+
+</body>
+
+</html>
