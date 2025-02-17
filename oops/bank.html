@@ -1,0 +1,29 @@
+<script type="text/javascript">
+
+    class Bank {
+        constructor(acno, name, amt) {
+            this.acno = acno;
+            this.name = name;
+            this.amt = amt;
+        }
+        withdraw(amount) {
+            if (this.amt < amount) {
+                alert("Insuffience Blance");
+            } else {
+                this.amt = this.amt - amount;
+                console.log(`Balance : ${this.amt}`);
+                alert("Withdraw Successful");
+            }
+        }
+        deposite(amount) {
+            this.amt = this.amt + amount;
+            console.log(`Balance : ${this.amt}`);
+            alert("Deposited Successfully");
+        }
+    }
+    let bank = new Bank(11, "jay", 10000);
+    bank.withdraw(500);
+    bank.deposite(900);
+    bank.withdraw(1200);
+
+</script>

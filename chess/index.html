@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <table align="center" id="root" border="1"></table>
+
+    <script type="text/javascript">
+
+        let root = document.getElementById('root');
+        for (let i = 1; i <= 8; i++) {
+            let tr = document.createElement('tr');
+            for (let j = 1; j <= 8; j++) {
+                if (i % 2 == 0) {
+                    if (j % 2 == 0) {
+                        let td = document.createElement('td');
+                        td.height = "75px"
+                        td.width = "75px"
+                        td.style.backgroundColor = "white";
+                        tr.appendChild(td)
+                    } else {
+                        let td = document.createElement('td');
+                        td.height = "75px"
+                        td.width = "75px"
+                        td.style.backgroundColor = "black";
+                        tr.appendChild(td)
+                    }
+                } else {
+                    if (j%2==0) {
+                        let td = document.createElement('td');
+                        td.height = "75px"
+                        td.width = "75px"
+                        td.style.backgroundColor = "black";
+                        tr.appendChild(td)
+                    } else {
+                        let td = document.createElement('td');
+                        td.height = "75px"
+                        td.width = "75px"
+                        td.style.backgroundColor = "white";
+                        tr.appendChild(td)
+                    }
+                }
+
+            }
+            root.appendChild(tr);
+        }
+    </script>
+</body>
+
+</html>
