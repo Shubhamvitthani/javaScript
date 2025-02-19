@@ -1,33 +1,88 @@
-<!-- Write a JavaScript program that creates a class called "BankAccount" with properties for account number and balance. Include methods to deposit and withdraw money from the account. Create some instances of the "BankAccount" class, deposit some money, and withdraw a portion of it. -->
-
-<script type="text/javascript">
-
-    class Person {
-        constructor(name, accountNumber, accountBalance) {
-            this.name = name;
-            this.acno = accountNumber;
-            this.acb = accountBalance;
-            console.log(`opening balance : ${this.acb}`);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
         }
-        withdraw(accountBalance) {
-            if (this.acb < accountBalance) {
-                console.log(`Insufficient Balance`);
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center">Bank Account</h2>
+    <p><strong>Account Holder:</strong> <span id="accountHolder">Rahul</span></p>
+    <p><strong>Account Number:</strong> <span id="accountNumber">12345</span></p>
+    <p><strong>Current Balance:</strong> ₹<span id="balance">1000</span></p>
+
+    <div class="mb-3">
+        <label for="amount" class="form-label">Enter Amount</label>
+        <input type="number" id="amount" class="form-control" placeholder="Enter amount">
+    </div>
+
+    <button class="btn btn-primary w-100 mb-2" onclick="depositMoney()">Deposit</button>
+    <button class="btn btn-danger w-100" onclick="withdrawMoney()">Withdraw</button>
+</div>
+
+<script>
+    class BankAccount {
+        constructor(name, accountNumber, balance) {
+            this.name = name;
+            this.accountNumber = accountNumber;
+            this.balance = balance;
+        }
+
+        deposit(amount) {
+            if (amount > 0) {
+                this.balance += amount;
+                alert("Deposit Successful!");
+                updateUI();
             } else {
-                this.acb = this.acb - accountBalance;
-                console.log(`Withdraw : ${accountBalance}`);
-                console.log(`Balance after deposite : ${this.acb}`);
-                alert("Withdraw Succsesfull");
+                alert("Enter a valid amount.");
             }
         }
-        deposite(accountBalance) {
-            this.acb = this.acb + accountBalance;
-            console.log(`Deposite : ${accountBalance}`);
-            console.log(`Balance after deposite : ${this.acb}`);
-            alert("Deposite Succsesfull");
+
+        withdraw(amount) {
+            if (amount > this.balance) {
+                alert("Insufficient Balance!");
+            } else if (amount > 0) {
+                this.balance -= amount;
+                alert("Withdrawal Successful!");
+                updateUI();
+            } else {
+                alert("Enter a valid amount.");
+            }
         }
     }
-    let obj = new Person("Rahul", 12345, 1000);
-    obj.withdraw(200);
-    obj.deposite(500);
 
+    let account = new BankAccount("Rahul", 12345, 1000);
+
+    function updateUI() {
+        document.getElementById("balance").innerText = account.balance;
+    }
+
+    function depositMoney() {
+        let amount = parseFloat(document.getElementById("amount").value);
+        account.deposit(amount);
+    }
+
+    function withdrawMoney() {
+        let amount = parseFloat(document.getElementById("amount").value);
+        account.withdraw(amount);
+    }
 </script>
+
+</body>
+</html>
