@@ -1,0 +1,21 @@
+<script>
+
+
+    let address = {
+        street: "abc",
+        city: "xyz",
+        state: "pqr",
+        country: "lmn"
+    }
+
+    let obj = {
+        name: 'John',
+        age: 30,
+        occupation: 'Software Engineer',
+        address: { ...address }
+    }
+
+    console.log(obj.address.state);
+
+
+</script>

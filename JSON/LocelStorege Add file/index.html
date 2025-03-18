@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1 id="store"></h1>
+
+
+    <script type="text/javascript">
+
+        // let data = [
+        //     {
+        //         "id": 1,
+        //         "name": "vicky",
+        //         "age": 25,
+        //         "address": {
+        //             country: "India",
+        //             stat: "Gujarat",
+        //             city: "Ahmedabad, surat, Rajkot, Vadodara,"
+        //         }
+        //     },
+        //     {
+        //         "id": 2,
+        //         "name": "Rahul",
+        //         "age": 30,
+        //         "address": {
+        //             country: "USA",
+        //             stat: "California",
+        //             city: "Los Angeles, San Francisco, San Diego"
+        //         }
+        //     }
+        // ];
+
+        // localStorage.setItem("store",JSON.stringify(data))
+
+        let store = JSON.parse(localStorage.getItem("store"))
+        console.log(store);
+        
+
+    </script>
+
+</body>
+
+</html>

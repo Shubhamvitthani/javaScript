@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 85%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <div class="input-group">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+                <i class="fa fa-envelope"></i>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class="fa fa-lock"></i>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function () {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (name && email && password) {
+                localStorage.setItem('user', JSON.stringify({ name, email, password }));
+
+                alert("Registration successful! Redirecting to login...");
+                window.location.href = "./login.html";
+            } else {
+                alert('Please fill all fields');
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Food Delight</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .navbar {
+            background-color: #ff4d4d;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .cart-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 25px;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 15px 20px;
+            border-radius: 50%;
+            color: white;
+            border: none;
+            background-color: black;
+            border: 1px solid black;
+        }
+
+        .card {
+            border: none;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-btn:hover {
+            background-color: white;
+            color: black;
+            transition: 0.5s;
+        }
+
+        .card img {
+            border-radius: 10px;
+        }
+
+        .food {
+            color: white;
+            font-size: 35px;
+            text-decoration: none;
+            font-weight: 700;
+
+        }
+
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <a class="food ms-5" href="#">FOOD DELIGHT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="ms-auto mb-2 mb-lg-0">
+                    <li id="auth-buttons">
+                        <button onclick="logoutUser()" id="logout-btn"
+                            style="padding: 3px 12px; font-weight: 500; border: none; border-radius: 5px; margin: 0 5px;">Logout</button>
+                        <a href="./register.html"><button onclick=" registerForm()"
+                                style="padding: 3px 12px; font-weight: 500; border: none; border-radius: 5px; margin: 0 5px;">Register</button></a>
+                        <button onclick="window.location.href='./login.html'" id="login-btn"
+                            style="padding: 3px 12px; font-weight: 500; border: none; border-radius: 5px; margin: 0 5px;">Login</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row" id="records"></div>
+    </div>
+
+    <a href="./cart.html">
+        <button class="cart-btn" onclick="showCart()">
+            <span id="count">1</span>
+            <i class="bi bi-cart"></i>
+        </button>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let record = [
+            {
+                id: 1,
+                name: 'plain',
+                qty: 1,
+                price: 80.00,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/97.jpg'
+            },
+            {
+                id: 2,
+                name: 'Paper Roast',
+                qty: 1,
+                price: 65.56,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/98.jpg'
+            },
+            {
+                id: 3,
+                name: 'Cheese Toast',
+                qty: 1,
+                price: 80.65,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/99.jpg'
+            },
+            {
+                id: 4,
+                name: 'Vegetable Sandwich',
+                qty: 1,
+                price: 50.00,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/100.jpg'
+            },
+            {
+                id: 5,
+                name: 'Chicken Sandwich',
+                qty: 1,
+                price: 70.42,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/101.jpg'
+            },
+            {
+                id: 6,
+                name: 'Beef Patty',
+                qty: 1,
+                price: 85.00,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/102.jpg'
+            },
+            {
+                id: 7,
+                name: 'Grilled Chicken',
+                qty: 1,
+                price: 90.23,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/103.jpg'
+            },
+            {
+                id: 8,
+                name: 'Veggie Wrap',
+                qty: 1,
+                price: 55.09,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/104.jpg'
+            },
+            {
+                id: 9,
+                name: 'Veggie Wrap',
+                qty: 1,
+                price: 55.09,
+                image: 'https://www.tutorjoes.in/public/js_program/12_cart/images/104.jpg'
+            }
+        ];
+
+        const viewProduct = () => {
+            let tbl = "";
+            record.map((val) => {
+                tbl += `
+                    <div class="col-md-4 mb-4">
+                        <div class="card p-3">
+                            <img src="${val.image}" class="card-img-top" alt="${val.name}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">${val.name}</h5>
+                                <p class="card-text">price : $${val.price}</p>
+                                <button onclick="addCart(${val.id})" class="btn btn-success">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('records').innerHTML = tbl;
+            let cart = JSON.parse(localStorage.getItem('carts')) || [];
+            document.getElementById('count').innerHTML = cart.length;
+        }
+        viewProduct();
+        let cart = JSON.parse(localStorage.getItem('carts')) || [];
+        const addCart = (id) => {
+
+            record.map((val) => {
+                if (val.id == id) {
+                    cart.push(val);
+                    localStorage.setItem('carts', JSON.stringify(cart));
+                    alert("Product Added to Cart");
+                    viewProduct();
+                }
+            });
+
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateAuthButtons();
+        });
+
+        function updateAuthButtons() {
+            let storedUser = localStorage.getItem("user");
+
+            if (storedUser) {
+                document.getElementById("logout-btn").style.display = "inline-block";
+                document.querySelector("a[href='./register.html']").style.display = "none";
+                document.getElementById("login-btn").style.display = "none";
+            } else {
+                document.getElementById("logout-btn").style.display = "none";
+                document.querySelector("a[href='./register.html']").style.display = "inline-block";
+                document.getElementById("login-btn").style.display = "inline-block";
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem("user");
+            alert("You have been logged out!");
+
+            updateAuthButtons();
+
+            setTimeout(() => {
+                window.location.href = "./register.html";
+            }, 1000);
+        }
+    </script>
+
+    </script>
+
+</body>
+
+</html>
