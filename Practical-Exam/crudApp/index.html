@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crud-App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .btn{
+            font-weight: 600;
+        }
+
+        .btn-custom {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Edit Button Styling */
+        .btn-edit {
+            padding: 8px 12px;
+            font-size: 16px;
+            color: white;
+            border-radius: 30%;
+            background-color: #007bff;
+            border: none;
+        }
+
+        /* Delete Button Styling */
+        .btn-delete {
+            padding: 8px 12px;
+            font-size: 16px;
+            color: white;
+            border-radius: 30%;
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .btn-submit {
+            background-color: #28a745; /* Clean Green */
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+        }
+
+        .btn-delete-all {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .alert-custom {
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 class="text-center mb-4">Crud App</h2>
+
+        <!-- Add Task Form -->
+        <div class="card">
+            <div class="card-header">Add Task</div>
+            <div class="card-body">
+                <form id="taskForm">
+                    <input type="hidden" id="editTaskId">
+                    <div class="mb-3">
+                        <label class="form-label">Enter Task</label>
+                        <input type="text" id="task" class="form-control" placeholder="Enter your task here" required>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Alert for Success/Error Messages -->
+        <div id="alertBox" class="alert-custom mt-3 d-none"></div>
+
+        <!-- Task List -->
+        <div class="card mt-4">
+            <div class="card-header">
+                Task List
+                <button class="btn bg-danger text-white btn-sm float-end" onclick="deleteAllTasks()">Delete All</button>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Task</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taskList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let editingTaskId = null;
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.classList.remove('d-none');
+            alertBox.classList.add(type === 'success' ? 'alert-custom-success' : 'alert-custom-error');
+            setTimeout(() => {
+                alertBox.classList.add('d-none');
+            }, 3000);
+        }
+        function renderTaskList() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+
+            tasks.forEach((task, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${task}</td>
+                    <td>
+                        <button class="btn btn-edit btn-sm" onclick="editTask(${index})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-delete btn-sm" onclick="deleteTask(${index})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                taskList.appendChild(row);
+            });
+        }
+
+        function saveTasksToLocalStorage() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function submitTask(event) {
+            event.preventDefault();
+
+            const taskInput = document.getElementById('task');
+            const taskValue = taskInput.value.trim();
+
+            if (taskValue === '') {
+                showAlert("Please enter a task!", "error");
+                return;
+            }
+
+            // Check if the task already exists
+            if (tasks.includes(taskValue)) {
+                showAlert("This task already exists!", "error");
+                return;
+            }
+
+            if (editingTaskId !== null) {
+                // Edit task
+                tasks[editingTaskId] = taskValue;
+                editingTaskId = null;
+                showAlert("Task updated successfully!", "success");
+            } else {
+                // Add new task
+                tasks.push(taskValue);
+                showAlert("Task added successfully!", "success");
+            }
+
+            taskInput.value = ''; // Clear input field
+            saveTasksToLocalStorage(); // Save tasks to localStorage
+            renderTaskList();
+        }
+
+        function editTask(index) {
+            const taskInput = document.getElementById('task');
+            taskInput.value = tasks[index];
+            editingTaskId = index; // Set the editing task id
+        }
+
+        function deleteTask(index) {
+            if (confirm("Are you sure you want to delete this task?")) {
+                tasks.splice(index, 1);
+                showAlert("Task deleted successfully!", "success");
+                saveTasksToLocalStorage(); // Save updated tasks to localStorage
+                renderTaskList();
+            }
+        }
+
+        function deleteAllTasks() {
+            if (confirm("Are you sure you want to delete all tasks?")) {
+                tasks = [];
+                showAlert("All tasks have been deleted!", "success");
+                saveTasksToLocalStorage(); // Save empty tasks to localStorage
+                renderTaskList();
+            }
+        }
+
+        document.getElementById('taskForm').addEventListener('submit', submitTask);
+
+        renderTaskList(); // Load tasks on page load
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
